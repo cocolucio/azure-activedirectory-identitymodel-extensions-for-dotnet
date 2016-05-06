@@ -1,0 +1,14 @@
+rd /s/q C:\github\wilson5x\test\Microsoft.IdentityModel.Logging.Tests\obj
+rd /s/q C:\github\wilson5x\test\Microsoft.IdentityModel.Logging.Tests\bin
+rd /s/q C:\github\wilson5x\test\Microsoft.IdentityModel.Protocols.OpenIdConnect.Tests\obj
+rd /s/q C:\github\wilson5x\test\Microsoft.IdentityModel.Protocols.OpenIdConnect.Tests\bin
+rd /s/q C:\github\wilson5x\test\Microsoft.IdentityModel.Protocols.Tests\obj
+rd /s/q C:\github\wilson5x\test\Microsoft.IdentityModel.Protocols.Tests\bin
+rd /s/q C:\github\wilson5x\test\Microsoft.IdentityModel.Protocols.WsFederation.Tests\obj
+rd /s/q C:\github\wilson5x\test\Microsoft.IdentityModel.Protocols.WsFederation.Tests\bin
+rd /s/q C:\github\wilson5x\test\Microsoft.IdentityModel.Tokens.Tests\obj
+rd /s/q C:\github\wilson5x\test\Microsoft.IdentityModel.Tokens.Tests\bin
+rd /s/q C:\github\wilson5x\test\System.IdentityModel.Tokens.Jwt.Tests\obj
+rd /s/q C:\github\wilson5x\test\System.IdentityModel.Tokens.Jwt.Tests\bin
+rd /s/q C:\github\wilson5x\test\System.IdentityModel.Tokens.Saml.Tests\obj
+rd /s/q C:\github\wilson5x\test\System.IdentityModel.Tokens.Saml.Tests\bin
