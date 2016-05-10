@@ -208,6 +208,5 @@ stash/*
 TestResults/*
 docs/*
 backup/*
-.build/
 .testPublish/
 /.vs/
