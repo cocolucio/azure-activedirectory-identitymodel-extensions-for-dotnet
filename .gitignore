@@ -15,6 +15,7 @@ project.lock.json
 [Rr]elease/
 x64/
 build/
+.build/dotnet/local/*/
 bld/
 [Bb]in/
 [Oo]bj/
