@@ -2,6 +2,7 @@
   <licenseUrl>https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/blob/master/LICENSE.txt</licenseUrl>
   <copyright>Copyright (c) Microsoft Corporation. All rights reserved.</copyright>
   <runtimes>netstandard1.4,net451</runtimes>
+  <src>
     <project name="Microsoft.IdentityModel.Protocols">
       <build>yes</build>
       <assemblyInfoVersion>2.0.</assemblyInfoVersion>
@@ -130,33 +131,36 @@
       </projectJson>
       <dependency></dependency>
     </project>
-    <testproject>
+  </src>
+  <test>
+    <project>
       <name>Microsoft.IdentityModel.Protocols.Tests</name>
       <build>yes</build>
-    </testproject>
-    <testproject>
+    </project>
+    <project>
       <name>Microsoft.IdentityModel.Protocols.WsFederation.Tests</name>
       <build>yes</build>
-    </testproject>
-    <testproject>     
+    </project>
+    <project>
       <name>Microsoft.IdentityModel.Protocols.OpenIdConnect.Tests</name>
       <build>yes</build>
-    </testproject>
-    <testproject>
+    </project>
+    <project>
       <name>Microsoft.IdentityModel.Tokens.Tests</name>
       <build>yes</build>
-    </testproject>
-    <testproject>
+    </project>
+    <project>
       <name>System.IdentityModel.Tokens.Jwt.Tests</name>
       <build>yes</build>
-    </testproject>
-    <testproject>
+    </project>
+    <project>
       <name>System.IdentityModel.Tokens.Saml.Tests</name>
       <build>yes</build>
-    </testproject>
-    <testproject>
+    </project>
+    <project>
       <name>Microsoft.IdentityModel.Logging.Tests</name>
       <build>yes</build>
-    </testproject>
+    </project>
+  </test>
 </projects>
 

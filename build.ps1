@@ -1,8 +1,5 @@
+param([string]$build="YES", [string]$buildConfiguration="Debug", [string]$installdotnet="YES", [string]$restore="YES", [string]$runtests="YES")
+
 $ErrorActionPreference = "Stop"
+& ".build\build.ps1" -build $build -buildConfiguration $buildConfiguration -installdotnet $installdotnet -restore $restore -root $PSScriptRoot -runtests $runtests
 
-Write-Host ""
-Write-Host "============================"
-Write-Host "build.ps1"
-Write-Host "PSScriptRoot = $PSScriptRoot"
-
-& ".build\Build.ps1" $PSScriptRoot
