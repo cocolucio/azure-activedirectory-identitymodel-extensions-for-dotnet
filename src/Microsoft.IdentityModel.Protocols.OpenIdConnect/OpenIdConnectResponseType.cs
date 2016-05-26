@@ -30,7 +30,7 @@ namespace Microsoft.IdentityModel.Protocols.OpenIdConnect
     /// <summary>
     /// Response types for OpenIdConnect.
     /// </summary>
-    public static class OpenIdConnectResponseTypes
+    public static class OpenIdConnectResponseType
     {
 #pragma warning disable 1591
         public const string CodeIdToken = "code id_token";

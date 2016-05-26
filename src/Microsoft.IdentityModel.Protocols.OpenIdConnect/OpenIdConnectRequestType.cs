@@ -34,9 +34,9 @@ namespace Microsoft.IdentityModel.Protocols.OpenIdConnect
     public enum OpenIdConnectRequestType
     {
 #pragma warning disable 1591
-        AuthenticationRequest,
-        LogoutRequest,
-        TokenRequest,
+        Authentication,
+        Logout,
+        Token,
 #pragma warning restore 1591
     }
 }

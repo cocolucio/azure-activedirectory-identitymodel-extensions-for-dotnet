@@ -30,7 +30,7 @@ namespace Microsoft.IdentityModel.Protocols.OpenIdConnect
     /// <summary>
     /// Specific scope values that are interesting to OpenID Connect.  See http://openid.net/specs/openid-connect-messages-1_0.html#scopes
     /// </summary>
-    public static class OpenIdConnectScopes
+    public static class OpenIdConnectScope
     {
 #pragma warning disable 1591
         public const string OpenId = "openid";

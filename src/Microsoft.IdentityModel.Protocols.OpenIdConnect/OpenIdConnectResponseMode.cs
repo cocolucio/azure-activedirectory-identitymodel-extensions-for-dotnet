@@ -30,7 +30,7 @@ namespace Microsoft.IdentityModel.Protocols.OpenIdConnect
     /// <summary>
     /// Response modes for OpenIdConnect.
     /// </summary>
-    public static class OpenIdConnectResponseModes
+    public static class OpenIdConnectResponseMode
     {
 #pragma warning disable 1591
         public const string Query = "query";
