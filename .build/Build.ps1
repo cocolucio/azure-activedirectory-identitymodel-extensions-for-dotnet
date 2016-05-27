@@ -1,17 +1,11 @@
-param([string]$build="YES", [string]$buildConfiguration="Debug", [string]$installdotnet="YES", [string]$restore="YES", [string]$root=$PSScriptRoot, [string]$runtests="YES", [string]$updateCoreFxVersion="NO")
+param([string]$build="YES", [string]$buildConfiguration="Debug", [string]$installdotnet="YES", [string]$restore="YES", [string]$root=$PSScriptRoot, [string]$runtests="YES", [string]$updateCoreFxVersion="YES")
 
 function SetCoreFxVersion([string]$fileName, [string]$oldVersion, [string]$newVersion)
 {
-    Write-Host "fileName: " $fileName;
-    Write-Host "oldVersion: " $oldVersion;
-    Write-Host "newVersion: " $newVersion;
-    $content = Get-Content -Path $fileName;
-    if ($content -notcontains $newVersion)
+    $content = Get-Content -Path $fileName -raw;
+    if ((-not $content.Contains($newVersion)) -and ($content.Contains("-rc3-")))
     {
-        Write-Host ""
-        Write-Host "============================"
-        Write-Host "Updating: " $fileName;
-        Write-Host "============================"
+        Write-Host "SetCoreFxVersion: " $fileName ", " $oldVersion ", " $newVersion
         $newContent = $content -replace $oldVersion, $newVersion;
         Set-Content $fileName $newContent;
     }

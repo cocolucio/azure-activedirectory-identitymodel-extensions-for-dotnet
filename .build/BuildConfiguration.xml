@@ -7,7 +7,6 @@
   <licenseUrl>https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/blob/master/LICENSE.txt</licenseUrl>
   <runtimes>netstandard1.4,net451</runtimes>
   <nugetVersion>3.5.0-rc-1285</nugetVersion>
-  <!-- dotnet-install: Downloading https://dotnetcli.blob.core.windows.net/dotnet/preview/Binaries/1.0.0-preview2-002857/dotnet-dev-win-x64.1.0.0-preview2-002857.zip -->
   <projects>
   <src>
     <project name="Microsoft.IdentityModel.Protocols">
