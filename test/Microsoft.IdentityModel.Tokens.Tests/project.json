@@ -16,7 +16,7 @@
           "version": "1.0.0-*",
           "type": "platform"
         },
-        "System.Reflection.TypeExtensions": "4.1.0-rc2-*"
+        "System.Reflection.TypeExtensions": "4.1.0-rc3-*"
       },
       "imports": [
         "dnxcore50",
@@ -25,8 +25,8 @@
     },
     "net451": {
       "frameworkAssemblies": {
-        "System.Runtime": "4.0.10-rc2-*",
-        "System.Threading.Tasks": "4.0.0-rc2-*"
+        "System.Runtime": "4.0.10-rc3-*",
+        "System.Threading.Tasks": "4.0.0-rc3-*"
       },
       "dependencies": {
         "xunit.runner.console": "2.1.0"

@@ -91,7 +91,6 @@ if ($build -eq "YES")
     $projects = $buildConfiguration.SelectNodes("projects/src/project");
     foreach($project in $projects) {
         $name = $project.name;
-        SetCoreFxVersion("src\$name\project.json", "ver-*", $coreFxVersion)
         Write-Host "Start-Process -wait -NoNewWindow $dotnetexe pack --no-build src\$name --configuration $buildConfiguration"
         Write-Host ""
         Start-Process -wait -NoNewWindow $dotnetexe "build src\$name --configuration $buildConfiguration"
