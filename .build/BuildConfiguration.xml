@@ -3,7 +3,7 @@
   <cliChannel>preview</cliChannel>
   <cliVersionWin>1.0.0-preview2-002857</cliVersionWin>
   <copyright>Copyright (c) Microsoft Corporation. All rights reserved.</copyright>
-  <coreFxVersion>-rc3-24126-00</coreFxVersion>
+  <coreFxVersion>-rc3-24127-01</coreFxVersion>
   <licenseUrl>https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/blob/master/LICENSE.txt</licenseUrl>
   <runtimes>netstandard1.4,net451</runtimes>
   <nugetVersion>3.5.0-rc-1285</nugetVersion>
