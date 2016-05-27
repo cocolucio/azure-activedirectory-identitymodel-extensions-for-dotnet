@@ -1,7 +1,12 @@
-<projects>
+<root>
+  <author>Azure Active Directory</author>
   <licenseUrl>https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/blob/master/LICENSE.txt</licenseUrl>
   <copyright>Copyright (c) Microsoft Corporation. All rights reserved.</copyright>
   <runtimes>netstandard1.4,net451</runtimes>
+  <cliVersionWin>1.0.0-preview2-002856</cliVersionWin>
+  <coreFxVersion>rc3-24126-00</coreFxVersion>
+  <nugetVersion>3.5.0-rc-1285</nugetVersion>
+  <projects>
   <src>
     <project name="Microsoft.IdentityModel.Protocols">
       <build>yes</build>
@@ -162,5 +167,5 @@
       <build>yes</build>
     </project>
   </test>
-</projects>
-
+  </projects>
+</root>

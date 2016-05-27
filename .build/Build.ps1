@@ -11,11 +11,27 @@ Write-Host "root: " $root;
 Write-Host "runtests: " $runtests;
 Write-Host "PSScriptRoot: " $PSScriptRoot;
 
-[xml]$buildContent = Get-Content $PSScriptRoot\BuildConfiguration.xml
+[xml]$buildConfiguration = Get-Content $PSScriptRoot\BuildConfiguration.xml
 
-$dotnetVersion = Get-Content $PSScriptRoot\cli.version.win
-$dotnetLocalInstallFolder = "$PSScriptRoot\dotnet\local\" + $dotnetVersion;
-$dotnetexe = "$dotnetLocalInstallFolder\dotnet.exe";
+$author = $buildConfiguration.SelectSingleNode("root/author").InnerText;
+$licenseUrl = $buildConfiguration.SelectSingleNode("root/licenseUrl").InnerText;
+$copyright = $buildConfiguration.SelectSingleNode("root/copyright").InnerText;
+$cliVersionWin = $buildConfiguration.SelectSingleNode("root/cliVersionWin").InnerText;
+$coreFxVersion = $buildConfiguration.SelectSingleNode("root/coreFxVersion").InnerText;
+$nugetVersion = $buildConfiguration.SelectSingleNode("root/nugetVersion").InnerText;
+$cliLocalInstallFolder = "$PSScriptRoot\dotnet\local\" + $cliVersionWin;
+$dotnetexe = "$cliLocalInstallFolder\dotnet.exe";
+
+Write-Host ""
+Write-Host "============================"
+Write-Host "author: " $author;
+Write-Host "copyright: " $copyright;
+Write-Host "cliLocalInstallFolder: " $cliLocalInstallFolder;
+Write-Host "cliVersionWin: " $cliVersionWin;
+Write-Host "coreFxVersion: " $coreFxVersion;
+Write-Host "dotnetexe: " $dotnetexe;
+Write-Host "licenseUrl: " $licenseUrl;
+Write-Host "nugetVersion: " $nugetVersion;
 
 if ($installdotnet -eq "YES")
 {
@@ -23,10 +39,10 @@ if ($installdotnet -eq "YES")
     Write-Host "============================"
     Write-Host "Install donetcli"
     Write-Host "dotnetVersion = $dotnetVersion"
-    Write-Host "dotnetLocalInstallFolder = $dotnetLocalInstallFolder"
+    Write-Host "dotnetLocalInstallFolder = $cliLocalInstallFolder"
     Write-Host "dotnetexe = $dotnetexe"
     Write-Host ""
-    &$PSScriptRoot\dotnet\install.ps1 -Channel "beta" -Version $dotnetVersion -Architecture x64 -InstallDir $dotnetLocalInstallFolder
+    &$PSScriptRoot\dotnet\install.ps1 -Channel "beta" -Version $dotnetVersion -Architecture x64 -InstallDir $cliLocalInstallFolder
 }
 
 if ($restore -eq "YES")
@@ -45,8 +61,8 @@ if ($build -eq "YES")
     Write-Host "============================"
     Write-Host "Build and pack assemblies"
     Write-Host ""
-    $rootNode = $buildContent.projects
-    $projects = $buildContent.SelectNodes("projects/src/project");
+    $rootNode = $buildConfiguration.projects
+    $projects = $buildConfiguration.SelectNodes("projects/src/project");
     foreach($project in $projects) {
         $name = $project.name;
         Write-Host "Start-Process -wait -NoNewWindow $dotnetexe pack --no-build src\$name --configuration $buildConfiguration"
@@ -62,7 +78,7 @@ if ($test -eq "YES")
     Write-Host "============================"
     Write-Host "Run Tests"
     Write-Host ""
-    $testProjects = $buildContent.SelectNodes("projects/test/project")
+    $testProjects = $buildConfiguration.SelectNodes("projects/test/project")
     foreach ($testProject in $testProjects) {
         $name = $testProject.name;
         Write-Host "name = $name";
