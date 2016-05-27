@@ -97,7 +97,7 @@ if ($build -eq "YES")
     Write-Host "Build and pack assemblies"
     Write-Host ""
     $rootNode = $buildConfiguration.projects
-    $projects = $buildConfiguration.SelectNodes("projects/src/project");
+    $projects = $buildConfiguration.SelectNodes("root/projects/src/project");
     foreach($project in $projects) {
         $name = $project.name;
         Write-Host "Start-Process -wait -NoNewWindow $dotnetexe pack --no-build src\$name --configuration $buildConfiguration"
@@ -107,13 +107,13 @@ if ($build -eq "YES")
     }
 }
 
-if ($test -eq "YES")
+if ($runtests -eq "YES")
 {
     Write-Host ""
     Write-Host "============================"
     Write-Host "Run Tests"
     Write-Host ""
-    $testProjects = $buildConfiguration.SelectNodes("projects/test/project")
+    $testProjects = $buildConfiguration.SelectNodes("root/projects/test/project")
     foreach ($testProject in $testProjects) {
         $name = $testProject.name;
         Write-Host "name = $name";
