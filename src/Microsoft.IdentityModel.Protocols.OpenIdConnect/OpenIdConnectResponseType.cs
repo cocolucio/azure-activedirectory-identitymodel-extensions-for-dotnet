@@ -30,12 +30,27 @@ namespace Microsoft.IdentityModel.Protocols.OpenIdConnect
     /// <summary>
     /// Response types for OpenIdConnect.
     /// </summary>
+    /// <remarks>Can be used to determine the message type by consumers of an <see cref="OpenIdConnectMessage"/>.
+    /// For example: OpenIdConnectMessageTests.Publics() sets <see cref="OpenIdConnectMessage.ResponseType"/>
+    /// to <see cref="OpenIdConnectResponseType.CodeIdToken"/>.</remarks>
     public static class OpenIdConnectResponseType
     {
-#pragma warning disable 1591
+        /// <summary>
+        /// Indicates code id_token type see: http://openid.net/specs/openid-connect-core-1_0.html#HybridAuthRequest.
+        /// For Example: http://openid.net/specs/openid-connect-core-1_0.html#code-id_tokenExample.
+        /// </summary>
         public const string CodeIdToken = "code id_token";
+
+        /// <summary>
+        /// Indicates id_token type see: http://openid.net/specs/openid-connect-core-1_0.html#HybridAuthRequest.
+        /// For Example: http://openid.net/specs/openid-connect-core-1_0.html#id_tokenExample.
+        /// </summary>
         public const string IdToken = "id_token";
+
+        /// <summary>
+        /// Indicates code type see: http://openid.net/specs/openid-connect-core-1_0.html#HybridAuthRequest.
+        /// For Example: http://openid.net/specs/openid-connect-core-1_0.html#codeExample.
+        /// </summary>
         public const string Code = "code";
-#pragma warning restore 1591
     }
 }
