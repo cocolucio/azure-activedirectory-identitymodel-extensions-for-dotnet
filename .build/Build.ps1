@@ -1,13 +1,20 @@
-param([string]$build="YES", [string]$buildConfiguration="Debug", [string]$installdotnet="YES", [string]$restore="YES", [string]$root=$PSScriptRoot, [string]$runtests="YES")
+param([string]$build="YES", [string]$buildConfiguration="Debug", [string]$installdotnet="YES", [string]$restore="YES", [string]$root=$PSScriptRoot, [string]$runtests="YES", [string]$updateCoreFxVersion="NO")
 
 function SetCoreFxVersion([string]$fileName, [string]$oldVersion, [string]$newVersion)
 {
     Write-Host "fileName: " $fileName;
     Write-Host "oldVersion: " $oldVersion;
     Write-Host "newVersion: " $newVersion;
-    $content = Get-Content -Path $fileName
-    $newContent = $content -replace $oldVersion, $newVersion
-    Set-Content $fileName $newContent
+    $content = Get-Content -Path $fileName;
+    if ($content -notcontains $newVersion)
+    {
+        Write-Host ""
+        Write-Host "============================"
+        Write-Host "Updating: " $fileName;
+        Write-Host "============================"
+        $newContent = $content -replace $oldVersion, $newVersion;
+        Set-Content $fileName $newContent;
+    }
 }
 
 Write-Host ""
@@ -20,6 +27,7 @@ Write-Host "restore: " $restore;
 Write-Host "root: " $root;
 Write-Host "runtests: " $runtests;
 Write-Host "PSScriptRoot: " $PSScriptRoot;
+Write-Host "updateCoreFxVersion: " $updateCoreFxVersion;
 
 [xml]$buildConfiguration = Get-Content $PSScriptRoot\BuildConfiguration.xml
 
@@ -57,17 +65,24 @@ if ($installdotnet -eq "YES")
     &$PSScriptRoot\dotnetcli\install.ps1 -Channel $cliChannel -Version $cliVersionWin -Architecture x64 -InstallDir $cliLocalInstallFolder
 }
 
-if ($build -eq "YES")
+if ($updateCoreFxVersion -eq "YES")
 {
     Write-Host ""
     Write-Host "============================"
     Write-Host "Update project.json"
     Write-Host ""
     $rootNode = $buildConfiguration.projects
+
     $projects = $buildConfiguration.SelectNodes("root/projects/src/project");
     foreach($project in $projects) {
         $name = $project.name;
-        SetCoreFxVersion "$root\src\$name\project.json" "-*" $coreFxVersion;
+        SetCoreFxVersion "$root\src\$name\project.json" "-rc3-\*" $coreFxVersion;
+    }
+
+    $testProjects = $buildConfiguration.SelectNodes("root/projects/test/project")
+    foreach ($testProject in $testProjects) {
+        $name = $testProject.name;
+        SetCoreFxVersion "$root\test\$name\project.json" "-rc3-\*" $coreFxVersion;
     }
 }
 
