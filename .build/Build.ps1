@@ -5,7 +5,7 @@ function SetCoreFxVersion([string]$fileName, [string]$oldVersion, [string]$newVe
     $content = Get-Content -Path $fileName -raw;
     if ((-not $content.Contains($newVersion)) -and ($content.Contains("-rc3-")))
     {
-        Write-Host "SetCoreFxVersion: " $fileName ", " $oldVersion ", " $newVersion
+        Write-Host ">>> SetCoreFxVersion: " $fileName ", " $oldVersion ", " $newVersion
         $newContent = $content -replace $oldVersion, $newVersion;
         Set-Content $fileName $newContent;
     }
@@ -88,7 +88,7 @@ if ($restore -eq "YES")
     Write-Host ""
     Write-Host "============================"
     Write-Host "RestoreAssemblies"
-    Write-Host "Start-Process -wait -NoNewWindow $dotnetexe restore -v Error"
+    Write-Host ">>> Start-Process -wait -NoNewWindow $dotnetexe restore -v Error"
     Write-Host ""
     Start-Process -wait -NoNewWindow $dotnetexe "restore -v Error"
 }
@@ -103,14 +103,13 @@ if ($build -eq "YES")
     $projects = $buildConfiguration.SelectNodes("root/projects/src/project");
     foreach($project in $projects) {
         $name = $project.name;
-        Write-Host "Start-Process -wait -NoNewWindow $dotnetexe pack src\$name --no-build -c $buildType -o $root\artifacts\build\$name\$buildType"
+        Write-Host ">>> Start-Process -wait -NoNewWindow $dotnetexe pack src\$name -c $buildType -o $root\artifacts\build\$name\bin\$buildType"
         Write-Host ""
-		foreach ($runtime in $runtimes)
-		{
-			Start-Process -wait -NoNewWindow $dotnetexe "build src\$name -c $buildType -o $root\artifacts\build\$name\$buildType\$runtime -f $runtime"
-		}
-		
         Start-Process -wait -NoNewWindow $dotnetexe "pack src\$name -c $buildType -o $root\artifacts\build\$name\$buildType"
+        Write-Host ""
+        Write-Host ">>> Copy-Item src\$name\bin\$buildType\* $root\artifacts\build\$name\$buildType -recurse"
+        Write-Host ""
+        Copy-Item src\$name\bin\$buildType\* $root\artifacts\build\$name\$buildType -recurse
     }
 }
 
@@ -125,7 +124,7 @@ if ($runtests -eq "YES")
         $name = $testProject.name;
         Write-Host "name = $name";
         Write-Host "Set-Location $root\test\$name"
-        Write-Host "Start-Process -wait -NoNewWindow $dotnetexe test --configuration $buildType"
+        Write-Host ">>> Start-Process -wait -NoNewWindow $dotnetexe test --configuration $buildType"
         Write-Host ""
         pushd
         Set-Location $root\test\$name
