@@ -1,4 +1,4 @@
-param([string]$build="YES", [string]$buildConfiguration="Debug", [string]$installdotnet="YES", [string]$restore="YES", [string]$root=$PSScriptRoot, [string]$runtests="YES", [string]$updateCoreFxVersion="YES")
+param([string]$build="YES", [string]$buildType="Debug", [string]$installdotnet="YES", [string]$restore="YES", [string]$root=$PSScriptRoot, [string]$runtests="YES", [string]$updateCoreFxVersion="YES")
 
 function SetCoreFxVersion([string]$fileName, [string]$oldVersion, [string]$newVersion)
 {
@@ -15,7 +15,7 @@ Write-Host ""
 Write-Host "============================"
 Write-Host "build.ps1"
 Write-Host "build: " $build;
-Write-Host "buildConfiguration: " $buildConfiguration;
+Write-Host "buildType: " $buildType;
 Write-Host "installdotnet: " $installdotnet;
 Write-Host "restore: " $restore;
 Write-Host "root: " $root;
@@ -34,6 +34,8 @@ $copyright = $buildConfiguration.SelectSingleNode("root/copyright").InnerText;
 $coreFxVersion = $buildConfiguration.SelectSingleNode("root/coreFxVersion").InnerText;
 $nugetVersion = $buildConfiguration.SelectSingleNode("root/nugetVersion").InnerText;
 $dotnetexe = "$cliLocalInstallFolder\dotnet.exe";
+$rootNode = $buildConfiguration.root
+$runtimes = $rootNode.runtimes.Split(",")
 
 Write-Host ""
 Write-Host "============================"
@@ -45,6 +47,7 @@ Write-Host "cliVersionWin: " $cliVersionWin;
 Write-Host "coreFxVersion: " $coreFxVersion;
 Write-Host "dotnetexe: " $dotnetexe;
 Write-Host "licenseUrl: " $licenseUrl;
+Write-Host "runtimes: " $runtimes;
 Write-Host "nugetVersion: " $nugetVersion;
 
 if ($installdotnet -eq "YES")
@@ -100,10 +103,14 @@ if ($build -eq "YES")
     $projects = $buildConfiguration.SelectNodes("root/projects/src/project");
     foreach($project in $projects) {
         $name = $project.name;
-        Write-Host "Start-Process -wait -NoNewWindow $dotnetexe pack --no-build src\$name --configuration $buildConfiguration"
+        Write-Host "Start-Process -wait -NoNewWindow $dotnetexe pack src\$name --no-build -c $buildType -o $root\artifacts\build\$name\$buildType"
         Write-Host ""
-        Start-Process -wait -NoNewWindow $dotnetexe "build src\$name --configuration $buildConfiguration"
-        Start-Process -wait -NoNewWindow $dotnetexe "pack --no-build src\$name --configuration $buildConfiguration"
+		foreach ($runtime in $runtimes)
+		{
+			Start-Process -wait -NoNewWindow $dotnetexe "build src\$name -c $buildType -o $root\artifacts\build\$name\$buildType\$runtime -f $runtime"
+		}
+		
+        Start-Process -wait -NoNewWindow $dotnetexe "pack src\$name -c $buildType -o $root\artifacts\build\$name\$buildType"
     }
 }
 
@@ -118,11 +125,11 @@ if ($runtests -eq "YES")
         $name = $testProject.name;
         Write-Host "name = $name";
         Write-Host "Set-Location $root\test\$name"
-        Write-Host "Start-Process -wait -NoNewWindow $dotnetexe test --configuration $buildConfiguration"
+        Write-Host "Start-Process -wait -NoNewWindow $dotnetexe test --configuration $buildType"
         Write-Host ""
         pushd
         Set-Location $root\test\$name
-        Start-Process -wait -NoNewWindow $dotnetexe "test --configuration $buildConfiguration"
+        Start-Process -wait -NoNewWindow $dotnetexe "test --configuration $buildType"
         popd
     }
 }
