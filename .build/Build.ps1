@@ -88,9 +88,10 @@ if ($restore -eq "YES")
     Write-Host ""
     Write-Host "============================"
     Write-Host "RestoreAssemblies"
-    Write-Host ">>> Start-Process -wait -NoNewWindow $dotnetexe restore -v Error"
     Write-Host ""
-    Start-Process -wait -NoNewWindow $dotnetexe "restore -v Error"
+    Write-Host ">>> Start-Process -wait -NoNewWindow $dotnetexe restore"
+    Write-Host ""
+    Start-Process -wait -NoNewWindow $dotnetexe "restore"
 }
 
 if ($build -eq "YES")
@@ -118,6 +119,7 @@ if ($runtests -eq "YES")
     Write-Host ""
     Write-Host "============================"
     Write-Host "Run Tests"
+	Write-Host ""
     $testProjects = $buildConfiguration.SelectNodes("root/projects/test/project")
     foreach ($testProject in $testProjects) {
         $name = $testProject.name;
