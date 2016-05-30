@@ -118,17 +118,16 @@ if ($runtests -eq "YES")
     Write-Host ""
     Write-Host "============================"
     Write-Host "Run Tests"
-    Write-Host ""
     $testProjects = $buildConfiguration.SelectNodes("root/projects/test/project")
     foreach ($testProject in $testProjects) {
         $name = $testProject.name;
-        Write-Host "name = $name";
-        Write-Host "Set-Location $root\test\$name"
-        Write-Host ">>> Start-Process -wait -NoNewWindow $dotnetexe test --configuration $buildType"
+        Write-Host "";
+        Write-Host ">>> Set-Location $root\test\$name"
+        Write-Host ">>> Start-Process -wait -NoNewWindow $dotnetexe test -c $buildType"
         Write-Host ""
         pushd
         Set-Location $root\test\$name
-        Start-Process -wait -NoNewWindow $dotnetexe "test --configuration $buildType"
+        Start-Process -wait -NoNewWindow $dotnetexe "test -c $buildType"
         popd
     }
 }
