@@ -16,5 +16,6 @@
     "keyFile": "../../build/35MSSharedLib1024.snk",
 	"warningsAsErrors": true,
     "xmlDoc": true,
+    "warningsAsErrors": true
   }
 }
